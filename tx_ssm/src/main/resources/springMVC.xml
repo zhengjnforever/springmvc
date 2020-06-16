@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <!--    配置了内容，启动Tomcat服务器的时候就会被加载-->
+    <!--    配置注解扫描-->
+    <context:component-scan base-package="cn.tx.controller"/>
+
+    <!--启动注解识别-->
+    <context:annotation-config/>
+
+    <!-- mvc注解支持-->
+    <mvc:annotation-driven />
+
+    <!--开通静态资源的访问-->
+    <mvc:default-servlet-handler />
+
+    <!--    配置日期类型转换器，类型转换器的组件，把日期类型转换注入到组件对象中-->
+    <bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
+        <property name="converters">
+            <set>
+                <bean class="cn.tx.util.StringTodDate"/>
+            </set>
+        </property>
+    </bean>
+
+    <!--    让映射器、适配器、处理器生效（默认不配置也是可以的）要是类型转换的标签就必须加上-->
+    <mvc:annotation-driven  conversion-service="conversionService"/>
+
+    <!-- 配置视图解析器，进行页面的跳转视图定位 -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/jsp/" />
+        <property name="suffix" value=".jsp" />
+    </bean>
+
+<!--    异常处理器-->
+
+<!-- 文件上传解析器-->
+    <!-- 对上传文件的解析-->
+
+
+<!--拦截器-->
+
+
+</beans>
